@@ -5,6 +5,12 @@
         <Nullable>enable</Nullable>
         <LangVersion>preview</LangVersion>
         <TargetFramework>net472</TargetFramework>
+        <Authors>lizhixin</Authors>
+        <PackageDescription>A chocolatey wrapper in windows. </PackageDescription>
+        <RepositoryUrl>https://github.com/li-zhixin/ChocoWrapper</RepositoryUrl>
+        <PackageLicenseUrl>https://github.com/li-zhixin/ChocoWrapper/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageTags>chocolatey</PackageTags>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
