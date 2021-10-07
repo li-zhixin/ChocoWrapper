@@ -55,7 +55,6 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Package_Name: ChocoWrapper
       Solution_Name: ChocoWrapper.sln                         
       Wap_Project_Path: .\ChocoWrapper\ChocoWrapper.csproj
 
@@ -94,9 +93,9 @@ jobs:
 
 
     - name: Pack project
-      run: dotnet pack $env:Wap_Project_Path  -p:PackageVersion=${{steps.tag.outputs.tag}}
+      run: dotnet pack $env:Wap_Project_Path  -p:PackageVersion=${{steps.tag.outputs.tag}} 
         
     - name: Push package
-      run: dotnet nuget push $env:Package_Name.${{steps.tag.outputs.tag}}.nupkg  -p:PackageVersion=$env:tag
+      run: dotnet nuget push ChocoWrapper.${{steps.tag.outputs.tag}}.nupkg -k ${{ secrets.API_KEY }}
 
    
