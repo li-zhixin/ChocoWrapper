@@ -4,7 +4,7 @@
 [![](https://img.shields.io/github/commit-activity/y/li-zhixin/ChocoWrapper.svg?style=flat-square)](https://github.com/li-zhixin/ChocoWrapper/commits/master)
 [![](https://img.shields.io/github/issues/li-zhixin/ChocoWrapper.svg?style=flat-square)](https://github.com/li-zhixin/ChocoWrapper/issues)
 
-A windows wrapper for chocolatey.
+A chocolatey wrapper in windows.
 
 ## Notice
 
