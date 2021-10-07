@@ -38,7 +38,12 @@ namespace ChocoWrapper
             {
                 versionParam += version;
             }
-            ExecutePowerShellCommand($"choco install {packageName} {versionParam} -y");
+            var chocoPath = FileHelper.Where("choco");
+            if (string.IsNullOrEmpty(chocoPath))
+            {
+                chocoPath = @"C:\ProgramData\chocolatey\bin\choco.exe";
+            }
+            ExecutePowerShellCommand($"{chocoPath} install {packageName} {versionParam} -y");
         }
 
         private static void ExecutePowerShellCommand(string command)

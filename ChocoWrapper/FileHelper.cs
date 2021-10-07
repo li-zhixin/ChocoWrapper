@@ -8,6 +8,11 @@ namespace ChocoWrapper
     {
         public static bool ExistInPath(string fileName)
         {
+            return !string.IsNullOrEmpty(Where(fileName));
+        }
+    
+        public static string Where(string fileName)
+        {
             var paths = Environment.GetEnvironmentVariable("PATH")?.Split(';') ?? Array.Empty<string>();
             string[] extensions;
             if (Path.HasExtension(fileName))
@@ -20,11 +25,17 @@ namespace ChocoWrapper
             }
 
             var allDirs = new[] {Environment.CurrentDirectory}.Concat(paths);
-            return allDirs.Any(dir =>
+
+            foreach (var dir in allDirs)
             {
-                return extensions.Any(extension =>
+                var actualExtension = extensions.FirstOrDefault(extension =>
                     File.Exists(Path.Combine(dir.Trim(), fileName + extension.ToLower())));
-            });
+                if (actualExtension != null)
+                {
+                    return Path.Combine(dir.Trim(), fileName + actualExtension.ToLower());
+                }
+            }
+            return "";
         }
     }
 }
