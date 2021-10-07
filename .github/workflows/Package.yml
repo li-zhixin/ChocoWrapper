@@ -53,9 +53,9 @@ jobs:
 
 
     - name: Pack project
-      run: dotnet pack $env:Wap_Project_Path  -p:PackageVersion=${{steps.tag.outputs.tag}}  s https://api.nuget.org/v3/index.json
+      run: dotnet pack $env:Wap_Project_Path  -p:PackageVersion=${{steps.tag.outputs.tag}}  
         
     - name: Push package
-      run: dotnet nuget push ChocoWrapper.${{steps.tag.outputs.tag}}.nupkg -k ${{secrets.API_KEY}}
+      run: dotnet nuget push ChocoWrapper.${{steps.tag.outputs.tag}}.nupkg -k ${{secrets.API_KEY}} -s https://api.nuget.org/v3/index.json
 
    
