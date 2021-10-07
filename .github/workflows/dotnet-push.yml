@@ -70,7 +70,11 @@ jobs:
       with:
         # Optional SDK version to use. If not provided, will install global.json version when available. Examples: 2.2.104, 3.1, 3.1.x
         dotnet-version: 5.0.x
-
+        
+    - name: Get tag
+      id: tag
+      uses: dawidd6/action-get-tag@v1
+      
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
@@ -93,6 +97,6 @@ jobs:
       run: dotnet pack $env:Wap_Project_Path  -p:PackageVersion=${{steps.tag.outputs.tag}}
         
     - name: Push package
-      run: dotnet nuget push  $env:Package_Name.${{steps.tag.outputs.tag}}.nupkg  -p:PackageVersion=$env:tag
+      run: dotnet nuget push $env:Package_Name.${{steps.tag.outputs.tag}}.nupkg  -p:PackageVersion=$env:tag
 
    
