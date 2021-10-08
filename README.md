@@ -21,3 +21,14 @@ choco.InstallPackage("ffmpeg","4.4");
 choco.InstallPackage("captura");
 ```
 
+## FAQ
+
+1.  Environment variables not refreshed after installing dependencies.
+
+   > A copy of the environment variables is made when the process is started, so any environment variable changes that occur in the middle process are not sensed. For newly started processes, you can pass the environment variables, for existing processes, you need to look them up manually.
+
+   ```c#
+   startInfo.EnvironmentVariables["PATH"] = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
+   ```
+
+   

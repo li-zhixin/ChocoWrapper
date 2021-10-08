@@ -38,12 +38,7 @@ namespace ChocoWrapper
             {
                 versionParam += version;
             }
-            var chocoPath = FileHelper.Where("choco");
-            if (string.IsNullOrEmpty(chocoPath))
-            {
-                chocoPath = @"C:\ProgramData\chocolatey\bin\choco.exe";
-            }
-            ExecutePowerShellCommand($"{chocoPath} install {packageName} {versionParam} -y");
+            ExecutePowerShellCommand($"choco install {packageName} {versionParam} -y");
         }
 
         private static void ExecutePowerShellCommand(string command)
@@ -59,6 +54,8 @@ namespace ChocoWrapper
                 StandardOutputEncoding = Encoding.UTF8,
                 StandardErrorEncoding = Encoding.UTF8,
             };
+            startInfo.EnvironmentVariables["PATH"] =
+                Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
             var instance = new Instance(startInfo);
             instance.DataReceived += (_, receivedData) =>
             {
