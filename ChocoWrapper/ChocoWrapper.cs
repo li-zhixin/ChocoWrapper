@@ -22,14 +22,16 @@ namespace ChocoWrapper
             {
                 return;
             }
-            var chocoInstallScript =
+
+            const string chocoInstallScript =
                 "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))";
             ExecutePowerShellCommand(chocoInstallScript);
         }
 
-        public void InstallPackage(string packageName, string version = "")
+        public void InstallPackage(string packageName, string version = "", string source = "")
         {
             var versionParam = "--version ";
+            var sourceParam = "--source ";
             if (string.IsNullOrEmpty(version))
             {
                 versionParam = "";
@@ -38,7 +40,17 @@ namespace ChocoWrapper
             {
                 versionParam += version;
             }
-            ExecutePowerShellCommand($"choco install {packageName} {versionParam} -y");
+
+            if (string.IsNullOrEmpty(source))
+            {
+                sourceParam = "";
+            }
+            else
+            {
+                sourceParam += source;
+            }
+
+            ExecutePowerShellCommand($"choco install {packageName} {versionParam} {sourceParam} -y");
         }
 
         private static void ExecutePowerShellCommand(string command)
@@ -47,15 +59,18 @@ namespace ChocoWrapper
             {
                 throw new Exception("Please run this program with administrator.");
             }
+
             var startInfo = new ProcessStartInfo
             {
                 FileName = "powershell",
                 Arguments = command,
                 StandardOutputEncoding = Encoding.UTF8,
                 StandardErrorEncoding = Encoding.UTF8,
+                EnvironmentVariables =
+                {
+                    ["PATH"] = Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine)
+                }
             };
-            startInfo.EnvironmentVariables["PATH"] =
-                Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine);
             var instance = new Instance(startInfo);
             instance.DataReceived += (_, receivedData) =>
             {

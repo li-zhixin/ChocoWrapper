@@ -17,8 +17,9 @@ A chocolatey wrapper in windows.
 ## How to use
 ```c#
 var choco = new ChocoWrapper.ChocoWrapper();
-choco.InstallPackage("ffmpeg","4.4");
 choco.InstallPackage("captura");
+choco.InstallPackage("ffmpeg","4.4");
+choco.InstallPackage("ffmpeg","4.4", "http://my-host:8624/nuget/private-chocolatey/");
 ```
 
 ## FAQ
